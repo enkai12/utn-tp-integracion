@@ -1,8 +1,8 @@
 # utn-tp-integracion
+
 Proyecto de Integración
 
-
-# Trabajo Integrador: Matemáticas y Programación en Python
+## Trabajo Integrador: Matemáticas y Programación en Python
 
 ## Alumnos - Grupo N° 2
 
@@ -95,7 +95,6 @@ Se evaluarán:
 
 > **Objetivo:** Aplicar de manera práctica lo aprendido, trabajar en equipo y comunicar ideas de forma clara y precisa.  
 > ¡Mucho éxito en el desarrollo del proyecto!
-
 
 ---
 
