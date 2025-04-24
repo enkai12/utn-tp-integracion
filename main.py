@@ -2,6 +2,17 @@
 # Muestren un número en binario y desafíen al usuario a adivinar su
 # equivalente decimal, o viceversa, reforzando la conversión entre ambos sistemas.
 
+
+""" Explicación del código de lo que hicimos en la reunión:
+
+Genera un número aleatorio entre 0 y 15.
+
+Lo convierte en binario con una lista predefinida.
+
+Muestran el binario y pide al usuario adivinar el número decimal.
+
+Verifica si la respuesta es correcta o no. """
+
 import random
 
 binarios = ["0000", "0001", "0010", "0011",
