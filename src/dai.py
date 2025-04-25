@@ -1,18 +1,3 @@
-# Juego de Adivinanza en Binario:
-# Muestren un número en binario y desafíen al usuario a adivinar su
-# equivalente decimal, o viceversa, reforzando la conversión entre ambos sistemas.
-
-
-""" Explicación del código de lo que hicimos en la reunión:
-
-Genera un número aleatorio entre 0 y 15.
-
-Lo convierte en binario con una lista predefinida.
-
-Muestran el binario y pide al usuario adivinar el número decimal.
-
-Verifica si la respuesta es correcta o no. """
-
 import random
 
 binarios = ["0000", "0001", "0010", "0011",
@@ -21,10 +6,14 @@ binarios = ["0000", "0001", "0010", "0011",
     "1100", "1101", "1110", "1111"]
 
 bandera = True
+correctas =0 
+intentos =0
+
 
 while bandera == True:
-    print("JUEGO DE ADIVINANZAS")
+    print("\nJUEGO DE ADIVINANZAS")
     # Se asigna a la variable "numero" un número aleatorio entre 0 y 15
+    intentos+=1
     numero = random.randint(0, 15)
     binario = binarios[numero]
 
@@ -35,9 +24,18 @@ while bandera == True:
     respuesta = int(input("Cuál sería el equivalente en decimal?: "))
 
     if respuesta == numero:
-        print("Es Correcto!")
-        bandera = False
-
+        correctas+=1
+        print("Es Correcto!\n")
+        
     else:
         print(f"Incorrecto, la respuesta era: {numero}\n")
-    
+
+   
+    if intentos % 3== 0: #Cada 3 intentos consulta si continua el juego
+        continuar = input("¿Quieres seguir jugando? (s/n):").lower()
+        if continuar != "s":
+            bandera = False
+            print("¡Gracias por jugar!")
+            print(f"{correctas} respuestas correctas de {intentos} intentos")
+
+  
