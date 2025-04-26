@@ -1,95 +1,129 @@
-# Guía
+# Guía detallada del juego de adivinanzas binarias
 
-## Objetivo del juego
-El programa consiste en un juego de adivinanzas en el que el usuario debe convertir números entre representaciones binarias y decimales. El juego presenta opciones múltiples y explica paso a paso la conversión.
+Este juego permite practicar la conversión entre binario y decimal, con distintos niveles de dificultad.
 
----
+## Introducción general
 
-## 1. Inicialización
-
-- Se importa el módulo `random` para generar números aleatorios.
-- Se definen variables de control:
-  - `partidas`: total de rondas jugadas.
-  - `aciertos`: cantidad de respuestas correctas.
-  - `bandera`: controla la ejecución continua del juego.
+El juego consiste en elegir una cantidad de bits (4, 6 u 8), seleccionar la dirección del juego (de binario a decimal o viceversa), y adivinar entre cinco opciones cuál es la correcta. El usuario tiene 3 intentos por partida y se llevan estadísticas de aciertos y partidas jugadas.
 
 ---
 
-## 2. Elección de dificultad (cantidad de bits)
+## Paso 1 - Elección de la cantidad de bits
 
-- Se solicita al usuario elegir entre 4, 6 u 8 bits.
-- Se verifica que la entrada sea un número válido y permitido.
-- Se calcula el valor decimal máximo representable con esa cantidad de bits 
-  usando `2 ** bits - 1`.
+Se solicita al usuario que ingrese cuántos bits quiere usar: 4, 6 u 8.
 
----
+```python
+bits = 0
+while bits != 4 and bits != 6 and bits != 8:
+    entrada = input("Elegí la cantidad de bits (4, 6 u 8): ")
+    if entrada.isdigit():
+        bits = int(entrada)
+        if bits != 4 and bits != 6 and bits != 8:
+            print("Solo se permite 4, 6 u 8.")
+    else:
+        print("Entrada no válida. Ingresá un número.")
+```
 
-## 3. Bucle principal del juego
-
-- Mientras la `bandera` esté activa, el juego sigue ejecutándose.
-- Se pregunta al usuario si desea jugar en dirección:
-  - Binario a Decimal (`b`)
-  - Decimal a Binario (`d`)
-
----
-
-## 4. Modo Binario a Decimal
-
-- Se genera un número decimal aleatorio y se convierte a binario con `bin()` y `zfill()`.
-- Se generan 4 opciones incorrectas distintas y se añaden a la lista de opciones junto con la correcta.
-- Se mezclan las opciones aleatoriamente.
-- Se muestran las opciones una sola vez.
-
-### Bucle de intentos (hasta 3)
-
-- Se permite elegir una opción entre 1 y 5.
-- Se valida la entrada:
-  - Si es correcta: se suma a los aciertos y se finaliza la ronda.
-  - Si es incorrecta: se informa y se reduce el contador de intentos.
-
-### Explicación paso a paso
-
-- Se recorre el binario y se explica la conversión de cada bit usando la potencia correspondiente de 2.
-- Se muestra la suma final obtenida.
+Esto valida que la entrada sea numérica y esté dentro de las opciones permitidas. El valor máximo se calcula como `2 ** bits - 1`.
 
 ---
 
-## 5. Modo Decimal a Binario
+## Paso 2 - Menú de dirección del juego
 
-- Se genera un número decimal aleatorio.
-- Se convierte a binario de forma manual:
-  - Se divide sucesivamente por 2 guardando los residuos.
-  - Se invierte el orden de los residuos para obtener el binario.
-- Se agregan ceros a la izquierda si el binario resultante es menor que la cantidad de bits elegida.
+Se le pregunta al usuario si quiere convertir:
 
-- Se generan 4 opciones incorrectas con el mismo formato binario.
+- De binario a decimal (`b`)
+- De decimal a binario (`d`)
 
-### Bucle de intentos (hasta 3)
-
-- Igual que en el modo anterior, se evalúa la elección y se brinda retroalimentación.
-
-### Explicación paso a paso
-
-- Se muestran todas las divisiones y residuos usados en la conversión.
-- Se indica que el binario se forma "de abajo hacia arriba".
+Esto se hace dentro de un bucle principal que permite jugar varias veces.
 
 ---
 
-## 6. Estadísticas y control de continuidad
+## Paso 3A - Juego: Binario a Decimal
 
-- Al final de cada ronda, se muestran las estadísticas de aciertos y partidas jugadas.
-- Se pregunta al usuario si desea jugar otra vez.
-  - Si responde 's', el juego sigue.
-  - Si no, se termina el bucle principal y se despide al usuario.
+1. Se genera un número aleatorio y se lo convierte a binario con la función `bin()`.
+2. Se generan 4 opciones incorrectas que no se repitan.
+3. Se muestran las 5 opciones al usuario, solo una es la correcta.
+4. Se dan hasta 3 intentos para adivinar.
+
+```python
+numero_decimal = random.randint(0, max_valor)
+binario = bin(numero_decimal)[2:].zfill(bits)
+```
+
+La función `zfill(bits)` agrega ceros a la izquierda si el número binario tiene menos dígitos.
 
 ---
 
-## Notas técnicas
+## Paso 4A - Evaluación de respuesta (Binario a Decimal)
 
-- Todas las entradas del usuario se validan cuidadosamente.
-- Las opciones se muestran una sola vez por ronda.
-- Se explica el proceso de conversión en ambas direcciones con detalle educativo.
+Se muestra la lista de opciones solo una vez, y se reduce el número de intentos sin volver a mostrarlas.
+
+Si el usuario elige una opción correcta, se actualizan las estadísticas y se da una explicación detallada:
+
+```python
+for i in range(bits):
+    bit = int(binario[i])
+    potencia = bits - 1 - i
+    valor = bit * (2 ** potencia)
+    suma += valor
+```
+
+Este bucle descompone el número binario para explicar cómo se calcula el decimal paso a paso.
 
 ---
 
-Este juego es útil para practicar y entender la relación entre los sistemas binario y decimal, con una interfaz simple y validaciones robustas.
+## Paso 3B - Juego: Decimal a Binario
+
+1. Se genera un número aleatorio entre 0 y el valor máximo.
+2. Se convierte manualmente a binario dividiendo por 2.
+3. Se generan 4 opciones incorrectas diferentes.
+4. Se muestran las 5 opciones al usuario, solo una es la correcta.
+
+La conversión manual a binario se hace con un bucle como este:
+
+```python
+for _ in range(bits):
+    binario_correcto = str(temp % 2) + binario_correcto
+    temp //= 2
+```
+
+---
+
+## Paso 4B - Evaluación de respuesta (Decimal a Binario)
+
+Después de responder, se muestra paso a paso cómo se llegó al número binario:
+
+```python
+while temp > 0:
+    residuo = temp % 2
+    cociente = temp // 2
+    pasos.append((temp, 2, cociente, residuo))
+    temp = cociente
+```
+
+Luego se imprimen los pasos en orden, explicando el método de divisiones sucesivas.
+
+---
+
+## Paso 5 - Estadísticas y Repetición
+
+Al final de cada ronda se muestran las estadísticas de aciertos y partidas, y se pregunta si se desea jugar de nuevo.
+
+---
+
+## Detalles adicionales
+
+- No se usa `try`, `except` ni `break`, por lo tanto toda la validación se hace con `isdigit()` y condiciones `while`.
+- Las opciones se generan una sola vez y no se repiten entre intentos.
+- El juego incluye 3 niveles de dificultad según la cantidad de bits: 4, 6 u 8.
+
+---
+
+## Fin del juego
+
+Al finalizar, se agradece al usuario por jugar.
+
+```python
+print("\nGracias por jugar. ¡Hasta la próxima!")
+```
