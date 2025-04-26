@@ -40,4 +40,3 @@
 - [ ] Realizar al menos una consulta relacionada con el proyecto
 
 ---
-
