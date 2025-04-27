@@ -166,3 +166,18 @@ while seguir_jugando:  # WHILE: sigue el juego hasta que el usuario diga que no 
         seguir_jugando = False
 
 print("\nGracias por jugar. ¡Hasta la próxima!")
+
+""" El método opciones.append(valor) pertenece al tipo de dato lista en Python. 
+Cuando escribes opciones.append(candidato), le estás pidiendo a la lista llamada opciones 
+que agregue al final el elemento candidato. Cada vez que se ejecuta ese append, la lista crece en uno, 
+manteniendo el orden de inserción. Esto nos permite construir dinámicamente la colección de 
+posibles respuestas mientras evitamos duplicados 
+(porque antes de llamar a append comprobamos que el candidato no esté ya en la lista).
+
+Por otro lado, random.shuffle(opciones) es una función del módulo estándar random. 
+Al invocarla pasándole una lista (en este caso opciones), reorganiza todos sus 
+elementos en un orden aleatorio, modificando la misma lista “in situ” 
+(es decir, no devuelve una nueva lista, sino que altera la existente). 
+De este modo, aunque el elemento correcto estuviera siempre en la primera posición de la 
+lista tras haberlo generado, al aplicar shuffle garantizamos que aparezca en una posición 
+distinta cada vez, haciendo el juego más impredecible y divertido. """
